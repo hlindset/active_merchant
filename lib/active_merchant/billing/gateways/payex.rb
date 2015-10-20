@@ -342,11 +342,11 @@ module ActiveMerchant #:nodoc:
 
       def build_xml_request(soap_action, properties)
         builder = Nokogiri::XML::Builder.new
-        builder.__send__('soap12:Envelope', {'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
-                                             'xmlns:xsd' => 'http://www.w3.org/2001/XMLSchema',
-                                             'xmlns:soap12' => 'http://www.w3.org/2003/05/soap-envelope'}) do |root|
-          root.__send__('soap12:Body') do |body|
-            body.__send__(soap_action[:name], xmlns: soap_action[:xmlns]) do |doc|
+        builder[:soap12].Envelope({'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
+                                   'xmlns:xsd' => 'http://www.w3.org/2001/XMLSchema',
+                                   'xmlns:soap12' => 'http://www.w3.org/2003/05/soap-envelope'}) do |root|
+          root[:soap12].Body do |body|
+            body.send(soap_action[:name], xmlns: soap_action[:xmlns]) do |doc|
               properties.each do |key, val|
                 doc.send(key, val)
               end
